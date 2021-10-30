@@ -15,8 +15,10 @@ vector<int> solution(string &S, vector<int> &P, vector<int> &Q)
 
   ++prefix_sums[charHash[S[0]] - 1][0];
   for (size_t i = 1; i < sizeS; ++i) {
-    for (size_t j = 0; j < 4; ++j)
+    for (size_t j = 0; j < 4; ++j) {
       prefix_sums[j][i] = prefix_sums[j][i-1];
+    }
+
     ++prefix_sums[charHash[S[i]] - 1][i];
   }
 
