@@ -18,5 +18,9 @@ int main()
 
   vector<int> input2{-1000, -1000, 1000};
   cout << "{-1000, -1000, 1000} => 1000000000: " << solution(input2) << endl;
+
+  vector<int> input3{-2, -1, -2, -1};
+  cout << "{-2, -1, -2, -1} => -2: " << solution(input3) << endl;
+
   return 0;
 }

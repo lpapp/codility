@@ -41,11 +41,10 @@ int solution(vector<int> &A)
       if (e < last_neg1) { last_neg2 = last_neg1; last_neg1 = e; }
       else if (e < last_neg2) last_neg2 = e;
     }
-    else {
-      if (e > last1) { last3 = last2; last2 = last1; last1 = e; }
-      else if (e > last2) { last3 = last2; last2 = e; }
-      else if (e > last3) { last3 = e; }
-    }
+
+    if (e > last1) { last3 = last2; last2 = last1; last1 = e; }
+    else if (e > last2) { last3 = last2; last2 = e; }
+    else if (e > last3) { last3 = e; }
   }
 
   return std::max(last_neg1 * last_neg2 * last1, last1 * last2 * last3);
@@ -64,5 +63,9 @@ int main()
 
   vector<int> input4{4, 7, 3, 2, 1, -3, -5};
   cout << "{4, 7, 3, 2, 1, -3, -5} => 105: " << solution(input4) << endl;
+
+  vector<int> input5{-2, -1, -2, -1};
+  cout << "{-2, -1, -2, -1} => -2: " << solution(input5) << endl; 
+
   return 0;
 }
