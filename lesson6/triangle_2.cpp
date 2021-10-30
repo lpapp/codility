@@ -5,7 +5,9 @@
 using namespace std;
 
 // 1 2 3 5 8 13 21 34 55 89 144 233 Fibonacci
-// Negative values do not matter, after 50 values, reach 2^31
+// Negative values do not contribute to the sum in a positive way.
+// Fibonacci(46) = 1836311903
+// Fibonacci(47) = 2971215073 > 2^31 (2147483647)
 // We could also use radix sort for O(N)
 
 int solution(vector<int> &A)
@@ -18,7 +20,7 @@ int solution(vector<int> &A)
   for (size_t i = 0; i < A.size(); ++i) {
     if (A[i] > 0) {
       aux.push_back(A[i]);
-      if (aux.size() > 50) return 1;
+      if (aux.size() > 47) return 1;
     }
   }
 
