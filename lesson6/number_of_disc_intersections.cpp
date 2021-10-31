@@ -4,6 +4,16 @@
 
 using namespace std;
 
+// O(n*logn) time complexity, O(n) space complexity.
+// Build the starting and ending points of the discs.
+// Order these two separate lists. The points are now disjointed.
+// Go through these two lists, and pick a point from the opening list if the
+// next item is less than or equal to the closing.
+// Every time we open a new disc, check how many are open and increment the
+// intersections with that much. When we pick a closing point, decrement the
+// currently opened circles by one. When reaching the end of the starting
+// points, we can quit. There is no more discs left to check for.
+
 int solution(vector<int> &A)
 {
   size_t sizeA = A.size();
