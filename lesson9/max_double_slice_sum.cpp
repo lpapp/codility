@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <climits>
 #include <iostream>
 #include <vector>
 
@@ -7,31 +6,27 @@ using namespace std;
 
 int solution(vector<int> &A)
 {
-  size_t last_index = A.size() - 1;
-  vector<int> first_slice(last_index, 0);
-  vector<int> second_slice(last_index, 0);
+  size_t sizeA = A.size();
+  if (sizeA == 3) return 0;
 
-  int seq_sum = 0;
+  size_t last_index = sizeA - 1;
+
+  vector<int> left_slice(sizeA, 0);
+  vector<int> right_slice(sizeA, 0);
+
+  for (size_t i = 1; i < last_index; ++i) {
+    int e = A[i];
+    left_slice[i] = max(0, left_slice[i - 1] + e);
+  }
+
+  for (int i = last_index - 1; i > 0; --i) {
+    int e = A[i];
+    right_slice[i] = max(0, right_slice[i + 1] + e);
+  }
+
   int max_sum = 0;
-  for (size_t i = 1; i < last_index - 1; ++i) {
-    int e = A[i];
-    seq_sum = max(e, seq_sum + e);
-    max_sum = max(max_sum, seq_sum);
-    first_slice[i] = max_sum;
-  }
-
-  seq_sum = 0;
-  max_sum = 0;
-  for (int i = last_index - 1; i > 1; --i) {
-    int e = A[i];
-    seq_sum = max(e, seq_sum + e);
-    max_sum = max(max_sum, seq_sum);
-    second_slice[i] = max_sum;
-  }
-
-  max_sum = 0;
-  for (size_t i = 1; i < last_index - 1; ++i) {
-    max_sum = max(max_sum, first_slice[i - 1] + second_slice[i + 1]);
+  for (size_t i = 1; i < last_index; ++i) {
+    max_sum = max(max_sum, left_slice[i - 1] + right_slice[i + 1]);
   }
 
   return max_sum;
