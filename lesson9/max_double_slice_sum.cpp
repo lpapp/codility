@@ -5,42 +5,33 @@
 
 using namespace std;
 
-// Go through all slices calculating their sum
-// But this time without the min element added to the sum
-// So, we need to maintain the minimum element somehow in each slice.
-// This minimum element needs to exclude the first and last indices because of
-// this:
-// A triplet (X, Y, Z), such that 0 ≤ X < Y < Z < N, is called a double slice.
-// The sum of double slice (X, Y, Z) is the total of A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1].
-
-
 int solution(vector<int> &A)
 {
-  int seq_sum = 0;
-  int min_e = A[1];
-  int max_sum = seq_sum;
   size_t last_index = A.size() - 1;
+  vector<int> first_slice(last_index, 0);
+  vector<int> second_slice(last_index, 0);
 
-  for (size_t i = 2; i < last_index; ++i) {
-    const int e = A[i];
-
+  int seq_sum = 0;
+  int max_sum = 0;
+  for (size_t i = 1; i < last_index - 1; ++i) {
+    int e = A[i];
     seq_sum = max(e, seq_sum + e);
     max_sum = max(max_sum, seq_sum);
+    first_slice[i] = max_sum;
+  }
 
-    if (seq_sum >= e) {
-      if (e < min_e) {
-        seq_sum += min_e - e;
-        max_sum = max(max_sum, seq_sum);
-        min_e = e;
-      }
-    }
-    else {
-      seq_sum = A[i];
-      ++i;
-      if (i < last_index) {
-        min_e = A[i];
-      }
-    }
+  seq_sum = 0;
+  max_sum = 0;
+  for (int i = last_index - 1; i > 1; --i) {
+    int e = A[i];
+    seq_sum = max(e, seq_sum + e);
+    max_sum = max(max_sum, seq_sum);
+    second_slice[i] = max_sum;
+  }
+
+  max_sum = 0;
+  for (size_t i = 1; i < last_index - 1; ++i) {
+    max_sum = max(max_sum, first_slice[i - 1] + second_slice[i + 1]);
   }
 
   return max_sum;
@@ -55,7 +46,7 @@ int main()
   cout << "3, 2, -100, 3, 4, -1, 5, 0 => 13: " << solution(i2) << endl;
 
   vector<int> i3{6, 3, -100, -50, 8, 4, 0, -1, 5};
-  cout << "6, 3, -100, 8, 4, 0, -1, 5 => 12: " << solution(i3) << endl;
+  cout << "6, 3, -100, 8, 4, 0, -1, 5 => 15: " << solution(i3) << endl;
 
   vector<int> i4{1, 2, 3, 4, 5, 6};
   cout << "1, 2, 3, 4, 5, 6 => 12: " << solution(i4) << endl;
