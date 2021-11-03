@@ -1,34 +1,33 @@
-#include <algorithm>
 #include <iostream>
-#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
-int solution(std::vector<int> &A)
+using namespace std;
+
+int solution(vector<int> &A)
 {
-  std::unordered_map<int, int> hash_map;
+  unordered_set<int> s;
 
   // Go through the vector
   for (const auto i : A) {
-    if (hash_map.count(i)) {
+    if (s.count(i)) {
       // If already seen, remove
-      hash_map.erase(i);
+      s.erase(i);
     }
     else {
       // If not yet seen, or seen, but removed, add
-      hash_map[i] = 1;
+      s.insert(i);
     }
   }
 
-  // We will eventually end up with one element in the hash map, so return the
-  // key of that.
-  return hash_map.begin()->first;
+  // We will eventually end up with one element in the set, so return that.
+  return *s.begin();
 }
 
 int main()
 {
-  std::vector<int> input1{9, 3, 9, 3, 9, 7, 9};
-
-  std::cout << "{9, 3, 9, 3, 9, 7, 9} (7): " << solution(input1) << std::endl;
+  vector<int> input1{9, 3, 9, 3, 9, 7, 9};
+  cout << "9, 3, 9, 3, 9, 7, 9 => 7: " << solution(input1) << std::endl;
 
   return 0;
 }
