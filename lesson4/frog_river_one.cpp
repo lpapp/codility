@@ -1,12 +1,13 @@
 #include <iostream>
-#include <set>
+#include <unordered_set>
 #include <vector>
 
-int solution(int X, std::vector<int> &A)
+using namespace std;
+
+int solution(int X, vector<int> &A)
 {
-  std::set<int> numbers;
-  for (size_t i = 1; i <= X; ++i)
-  {
+  unordered_set<int> numbers;
+  for (size_t i = 1; i <= X; ++i) {
     numbers.insert(i);
   }
 
@@ -22,11 +23,11 @@ int solution(int X, std::vector<int> &A)
 
 int main()
 {
-  std::vector<int> input1{1, 3, 1, 4, 2, 3, 5, 4};
-  std::cout << "{1, 3, 1, 4, 2, 3, 5, 4} => 6: " << solution(5, input1) << std::endl;
+  vector<int> input1{1, 3, 1, 4, 2, 3, 5, 4};
+  cout << "{1, 3, 1, 4, 2, 3, 5, 4} => 6: " << solution(5, input1) << endl;
 
-  std::vector<int> input2{1};
-  std::cout << "{1} => -1: " << solution(5, input2) << std::endl;
+  vector<int> input2{1};
+  cout << "{1} => -1: " << solution(5, input2) << std::endl;
 
   return 0;
 }
