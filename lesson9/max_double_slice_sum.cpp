@@ -25,13 +25,11 @@ int solution(vector<int> &A)
     const int e = A[i];
 
     seq_sum = max(e, seq_sum + e);
-    cout << "SEQ_SUM: " << seq_sum << endl;
     max_sum = max(max_sum, seq_sum);
 
     if (seq_sum >= e) {
       if (e < min_e) {
         seq_sum += min_e - e;
-        cout << "SEQ_SUM 2: " << seq_sum << endl;
         max_sum = max(max_sum, seq_sum);
         min_e = e;
       }
@@ -86,6 +84,18 @@ int main()
   // 1, -1, 1 (X=1, Y=3, Z=5)
   vector<int> i12{0, -1, 1, -1, 1, -1};
   cout << "0, -1, 1, -1, 1, -1 => 2: " << solution(i12) << endl;
+
+  vector<int> i13{0, -2, 3, -2, 3, -1};
+  cout << "0, -2, 3, -2, 3, -1 => 6: " << solution(i13) << endl;
+
+  vector<int> i14{0, -2, 10, -1, 5, 0};
+  cout << "0, -2, 10, -1, 5, 0 => 15: " << solution(i14) << endl;
+
+  vector<int> i15{0, -1, 10, -2, 5, 0};
+  cout << "0, -1, 10, -2, 5, 0 => 15: " << solution(i15) << endl;
+
+  vector<int> i16{1, 1, 0, 10, -100, 10, 0};
+  cout << " 1 1 0 10 -100 10 0 => 21: " << solution(i16) << endl;
 
   return 0;
 }
