@@ -19,9 +19,9 @@ using namespace std;
 
 int solution(vector<int> &A)
 {
-  size_t sizeA = A.size();
+  const int sizeA = A.size();
   vector<bool> hash(sizeA, false);
-  for (size_t i = 1; i < sizeA - 1; ++i) {
+  for (int i = 1; i < sizeA - 1; ++i) {
     const int e = A[i];
     if (e > A[i - 1] && e > A[i + 1]) hash[i] = true;
   }
@@ -32,28 +32,29 @@ int solution(vector<int> &A)
   }
 
   int max_number_of_groups = 0;
-  for (size_t group_size = 2; group_size <= sizeA; ++group_size) {
-    if (sizeA % group_size != 0) continue;
-    int number_of_groups = sizeA / group_size;
-    int group_index = 0;
-    // cout << "GROUP SIZE: " << group_size << endl;
-    for (int peak_index = 0; peak_index < sizeA; peak_index = group_index * group_size) {
-      peak_index = hash_next[peak_index];
-      // cout << "PEAK: " << peak_index << endl;
-      if (!peak_index) break;
-      int lower_range = group_index * group_size;
-      int upper_range = lower_range + group_size - 1;
-      // cout << "UPPER RANGE: " << upper_range << endl;
-      if (peak_index > upper_range) {
-        break;
+  for (int divisor = 1; divisor * divisor <= sizeA; ++divisor) {
+    if (sizeA % divisor != 0) continue;
+    const int complement_divisor = sizeA / divisor;
+    vector<int> divisors{divisor};
+    if (divisor != complement_divisor) divisors.push_back(complement_divisor);
+    for (const int group_size : divisors) {
+      if (group_size == 1) continue;
+      int number_of_groups = sizeA / group_size;
+      int group_index = 0;
+      for (int peak_index = 0; peak_index < sizeA; peak_index = group_index * group_size) {
+        peak_index = hash_next[peak_index];
+        if (!peak_index) break;
+        int lower_range = group_index * group_size;
+        int upper_range = lower_range + group_size - 1;
+        if (peak_index > upper_range) {
+          break;
+        }
+        ++group_index;
       }
-      ++group_index;
-    }
 
-    // cout << "NUMBER OF GROUPS: " << number_of_groups << endl;
-    // cout << "GROUP INDEX: " << group_index << endl;
-    if (number_of_groups == group_index) {
-      max_number_of_groups = max(max_number_of_groups, number_of_groups);
+      if (number_of_groups == group_index) {
+        max_number_of_groups = max(max_number_of_groups, number_of_groups);
+      }
     }
   }
 
@@ -67,6 +68,9 @@ int main()
 
   vector<int> i2{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
   cout << "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 => 0: " << solution(i2) << endl;
+
+  vector<int> i3{1, 3, 2, 1};
+  cout << "1, 3, 2, 1 => 1: " << solution(i3) << endl;
 
   return 0;
 }
