@@ -21,25 +21,27 @@ int solution(vector<int> &A)
 {
   int sizeA = A.size();
   vector<bool> hash(sizeA, false);
-  int max_distance = 2;
-  
+  int min_group_size = 2;
+ 
+  int pi = 0; 
   for (int i = 1, pi = 0; i < sizeA - 1; ++i) {
     const int e = A[i];
     if (e > A[i - 1] && e > A[i + 1]) {
       hash[i] = true;
       int diff = i - pi;
-      if (pi && diff > max_distance) max_distance = diff;
+      if (pi) diff /= 2;
+      if (diff > min_group_size) min_group_size = diff;
       pi = i;
     }
   }
+  min_group_size = min(min_group_size, sizeA - pi);
 
   vector<int> hash_next(sizeA, 0);
   for (int i = sizeA - 2; i >= 0; --i) {
     hash_next[i] = hash[i] ? i : hash_next[i + 1];
   }
 
-  int max_number_of_groups = 0;
-  for (int group_size = max_distance / 2; group_size <= sizeA; ++group_size) {
+  for (int group_size = min_group_size; group_size <= sizeA; ++group_size) {
     if (sizeA % group_size != 0) continue;
     int number_of_groups = sizeA / group_size;
     int group_index = 0;
@@ -54,12 +56,10 @@ int solution(vector<int> &A)
       ++group_index;
     }
 
-    if (number_of_groups == group_index) {
-      max_number_of_groups = max(max_number_of_groups, number_of_groups);
-    }
+    if (number_of_groups == group_index) return number_of_groups;
   }
 
-  return max_number_of_groups;
+  return 0;
 }
 
 int main()
