@@ -17,24 +17,23 @@ vector<int> solution(vector<int> &A)
   const int sizeA = A.size();
   const int max_elem = *max_element(A.cbegin(), A.cend());
   vector<int> hash(max_elem, 0);
-  vector<unordered_set<int>> divisors_hash(max_elem, unordered_set<int>{1});
+  vector<unordered_set<int>> divisors_hash(max_elem, unordered_set<int>{});
   for (const int e : A) {
     ++hash[e - 1];
-    divisors_hash[e - 1].insert(e);
+    divisors_hash[e - 1].insert({1, e});
   }
 
-  for (int i = 2; i * i < max_elem; ++i) {
+  for (int i = 2; i * i <= max_elem; ++i) {
     for (int k = i; k <= max_elem; k += i) {
-      divisors_hash[k - 1].insert({i, k / i});
+      if (hash[k - 1]) divisors_hash[k - 1].insert({i, k / i});
     }
   }
 
   vector<int> non_divisors(sizeA, 0);
   for (int i = 0; i < sizeA; ++i) {
     const int e = A[i];
-    cout << "E: " << e << endl;
     int divisor_count = 0;
-    for (const int divisor : divisors_hash[e]) {
+    for (const int divisor : divisors_hash[e - 1]) {
       divisor_count += hash[divisor - 1];
     }
     non_divisors[i] = sizeA - divisor_count;
