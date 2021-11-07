@@ -6,7 +6,7 @@
 using namespace std;
 
 // 1. Check the max element in A to spare spaces rather than sizeA * 2
-// 2. Build a hash of the occurences in A.
+// 2. Build a hash of the occurrences in A.
 // 3. Add {1, num} as divisors to all numbers.
 // 4. Add all other divisors to all numbers.
 // 5. Go through each number in A. Check how many times the divisors occur in A.
