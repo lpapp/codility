@@ -4,13 +4,25 @@
 
 using namespace std;
 
+// 1. Compute the first L fibonacci numbers. Each calculation needs modulo 2^30
+//    because the 50000th fibonacci number cannot be stored even in long
+//    double, it is so big. Since INT_MAX is 2^31, the summary of previously
+//    modulo'd numbers by 2^30 cannot exceed that. Therefore, we do not need to
+//    have bigger store and/or casting.
+// 
+// 2. Go through the arrays executing the lookup and modulos. We can be sure
+//    this gives the correct result since modulo 2^30 does not take any
+//    information away. E.g. modulo 100 does not take away any information for
+//    subsequent modulo 10.
+
 vector<int> solution(vector<int> &A, vector<int> &B)
 {
   const int L = A.size();
   vector<int> fibonacci_numbers(L, 1);
   fibonacci_numbers[1] = 2;
+  static const int pow_2_30 = pow(2, 30);
   for (int i = 2; i < L; ++i) {
-    fibonacci_numbers[i] = (fibonacci_numbers[i - 1] + fibonacci_numbers[i - 2]) % static_cast<int>(pow(2, 30));
+    fibonacci_numbers[i] = (fibonacci_numbers[i - 1] + fibonacci_numbers[i - 2]) % pow_2_30;
   }
 
   vector<int> consecutive_answers(L, 0);
