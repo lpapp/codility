@@ -5,6 +5,34 @@
 
 using namespace std;
 
+// 1. Find the maximum element in the input array. We could also use M, but M
+//    does not necessarily occur. A smaller number could be the maximum, so it
+//    is slight optimisation.
+// 2. Calculate the sum of the input array. This would be the maximum largest
+//     sum.
+// 3. Apply binary search, where the start is the maximum element and the end
+//    is the sum. The minimum largest sum would be in this range.
+// 4. For each trial, check whether we can squeeze the elements into fewer
+//    blocks than the block number requested. If it is fewer, it is okay because
+//    we can use empty blocks. If it is equal, that is also acceptable.
+//    However, it is greater, then we can conclude that the tried minimum
+//    largest sum needs to be higher to allow individual blocks to be larger to
+//    reduce the block count.
+// 5. One general principle can be observed above that the more fairly we
+//    distribute the sums of the blocks, the largest will become the minimum
+//    possible. For this, we need to squeeze as many elements into an individual
+//    block as possible.
+// 6. If the number of blocks for a tried minimum largest sum is smaller than
+//    the expected block count, then we can try a slightly smaller minimum
+//    largest sum, otherwise we have to try a bit greater until we eventually
+//    find the best number.
+//
+// As far as runtime complexity goes, the solution is O(n*log(N*M)) because the
+// binary search is logarithmic. The sum can be N number of times the maximum
+// element M at worst, which results in an N*M range to bisect with binary
+// search. The inner iteration will go through all the elements, so that is N
+// times. Therefore, it is O(N*log(N*M)) which is equivalent to O(N*log(N+M).
+
 int check(vector<int>& A, int largest_sum)
 {
   int sum = 0;
