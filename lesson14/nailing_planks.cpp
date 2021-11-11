@@ -26,7 +26,7 @@ using namespace std;
     b. O(2M), which is O(M) as we can leave the constant.
     c. O(N), going through the number of elements in A and B.
 
-  Therefore, the runtime complexity of the inner loop is log(M) + log(N).
+  Therefore, the runtime complexity of the inner loop is M + N.
 
   The overall runtime complexity of the algorithm is therefore O(log(M) * (M +
   N)).
