@@ -26,7 +26,7 @@ int solution(int M, vector<int> &A)
   int N = A.size();
   int distinct_slices = N;
   for (int back = 0, front = 1; front < N; ++front) {
-    if (A[back] == A[front]) ++back;
+    if (A[back] == A[front]) { back = front; if (A[front] != A[front - 1]) ++distinct_slices; } 
     else if (front == N - 1) distinct_slices += (front - back);
     else if (A[front] != A[front + 1]) distinct_slices += (front - back);
     else if (A[front] == A[front + 1]) { distinct_slices += (front - back); back = front; }
@@ -71,6 +71,12 @@ int main()
 
   vector<int> A9{1, 2, 2};
   cout << "1, 2, 2 | 5 => 4: " << solution(5, A9) << endl;
+
+  vector<int> A10{1, 2, 1};
+  cout << "1, 2, 1 | 5 => 5: " << solution(5, A10) << endl;
+
+  vector<int> A11{1, 1, 2, 1};
+  cout << "1, 1, 2, 1 | 6 => 6: " << solution(5, A11) << endl;
 
   return 0;
 }
