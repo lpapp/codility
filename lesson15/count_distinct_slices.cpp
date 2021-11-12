@@ -7,36 +7,36 @@ using namespace std;
   1. Notice that the minimum amount of distinct slices is N because each element
      is a distinct one-item slice.
   2. Start the back index from the first element.
-  3. Start the front index from the second element.
-  4. Start the iteration loop and iterate until front reaches the end.
-  5. If back equals to front, advance back until it reaches front, since there
-     is no distinct slices here apart from the one-item slices.
-  6. If back does not equal to front, but front is the last element, update the
-     counter to include the index differences. E.g. {1, 2} would result in +1.
-      Finally, exit the loop to 3 for this.
-  7. Front is not the last element, but it does not equal to back. Update the
-     counter with the index differences.
-  8. If the next front item equal to the current, update back to the current
-     index.
+  3. Start the front index from the first element.
+  4. Advance the front until we find a duplicate in the sequence.
+  5. In each iteration, increment the counter with the necessary amount, this
+     is the difference between front and back.
+  6. If we reach the maximum counts at any iteration, just return immediately
+     for slight optimisation.
+  7. In each iteration of the sequence, record the elements that have occurred.
+  8. Once we have found a duplicate, advance the back index one ahead of the
+     duplicate.
+  9. While we advance the back index, clear all the occurred elements since we
+     start a new slice beyond those elements.
 
+  The runtime complexity of this solution is O(N) since we go through each
+  element.
+
+  The space complexity of this solution is O(M) because we have a hash to store
+  the occurred elements in the sequences. The maximum element of this hash is M.
 */
 
 int solution(int M, vector<int> &A)
 {
   int N = A.size();
   int distinct_slices = N;
-  for (int back = 0, front = 1; front < N; ++front) {
-    const uint64_t diff = (front - back) * (front - back + 1) / 2;              
-    if (A[back] == A[front]) {
-      if (front > back + 1) { distinct_slices += front - back - 1; --front; }
-      else if (front == N - 1) { for (; back < N - 1; distinct_slices += front - back - 1, ++back); }
-    ++back; }
-    else if (front == N - 1) distinct_slices += diff;                           
-    else if (A[front] != A[front + 1]);                                         
-    else if (A[front] == A[front + 1]) { distinct_slices += diff; back = front; }
-
-    if (distinct_slices > 1000000000) return 1000000000;
+  vector<bool> seq_hash(M + 1, false);
+  for (int back = 0, front = 0; front < N; ++back) {
+    while (front < N and !seq_hash[A[front]]) { distinct_slices += front - back; if (distinct_slices > 1000000000) return 1000000000; seq_hash[A[front++]] = true; }
+    while (front < N and back < N and A[back] != A[front]) seq_hash[A[back++]] = false;
+    seq_hash[A[back]] = false;
   }
+
   return distinct_slices;
 }
 
