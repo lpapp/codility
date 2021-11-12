@@ -51,7 +51,7 @@ int solution(vector<int> &A, vector<int> &B, vector<int> &C)
   int end = C.size();
   int min_nails = -1;
   while (start <= end) {
-    int mid = (start + end) / 2;
+    const int mid = (start + end) / 2;
     if (check(A, B, C, mid)) { end = mid - 1; min_nails = mid; }
     else start = mid + 1;
   }

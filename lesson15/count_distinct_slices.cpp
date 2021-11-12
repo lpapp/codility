@@ -78,5 +78,8 @@ int main()
   vector<int> A11{1, 1, 2, 1};
   cout << "1, 1, 2, 1 | 6 => 6: " << solution(5, A11) << endl;
 
+  vector<int> A12{0, 1, 2, 0, 1};
+  cout << "0, 1, 2, 0, 1 | 3 => 12: " << solution(5, A12) << endl;
+
   return 0;
 }
