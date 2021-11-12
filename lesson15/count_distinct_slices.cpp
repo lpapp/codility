@@ -26,10 +26,14 @@ int solution(int M, vector<int> &A)
   int N = A.size();
   int distinct_slices = N;
   for (int back = 0, front = 1; front < N; ++front) {
-    if (A[back] == A[front]) { back = front; if (A[front] != A[front - 1]) ++distinct_slices; } 
-    else if (front == N - 1) distinct_slices += (front - back);
-    else if (A[front] != A[front + 1]) distinct_slices += (front - back);
-    else if (A[front] == A[front + 1]) { distinct_slices += (front - back); back = front; }
+    const uint64_t diff = (front - back) * (front - back + 1) / 2;              
+    if (A[back] == A[front]) {
+      if (front > back + 1) { distinct_slices += front - back - 1; --front; }
+      else if (front == N - 1) { for (; back < N - 1; distinct_slices += front - back - 1, ++back); }
+    ++back; }
+    else if (front == N - 1) distinct_slices += diff;                           
+    else if (A[front] != A[front + 1]);                                         
+    else if (A[front] == A[front + 1]) { distinct_slices += diff; back = front; }
 
     if (distinct_slices > 1000000000) return 1000000000;
   }
@@ -80,6 +84,12 @@ int main()
 
   vector<int> A12{0, 1, 2, 0, 1};
   cout << "0, 1, 2, 0, 1 | 3 => 12: " << solution(5, A12) << endl;
+
+  vector<int> A13{0, 1, 2, 1};
+  cout << "0, 1, 2, 1 | 3 => 8: " << solution(3, A13) << endl;
+
+  vector<int> A14{0, 1, 2, 3, 2, 1};
+  cout << "0, 1, 2, 3, 2, 1 | 3 => 15: " << solution(3, A14) << endl;
 
   return 0;
 }
