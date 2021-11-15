@@ -3,12 +3,9 @@
 
 int solution(int A, int B, int K)
 {
-  int remainder = A % K;
-  int range_start = remainder ? A + (K - remainder) : A;
-  int add = 1;
-  if (range_start > B) { range_start = B - 1; add = 0; }
-  int range = B - range_start;
-  return range / K + add;
+  const int remainder = A % K;
+  const int range_start = remainder ? A + (K - remainder) : A;
+  return (range_start > B) ? 0 : (B - range_start) / K + 1;
 }
 
 int main()
