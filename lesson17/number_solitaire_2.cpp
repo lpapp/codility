@@ -4,16 +4,18 @@
 using namespace std;
 
 /*
-  1. Create a hash for the max sums. We only need to store the element within
+  1. Create a hash for the max sums. We only need to store the elements within
      reach, so the last 6 elements. This is because the dice can only go back
      so much.
-  2. Initialise this with the first element in the array for simplicity since
-     the first element in this hash equals to the first element of the inputs.
-  3. Then go through the elements from the second element.
-  4. For each iteration, check the previous positions, depending on the range
-     of the dice. Also, consider clipping it to the last 6 elements.
-  5. Pick up the maximum value from the previous values.
-  6. Return the max sum of the last element at the end.
+  2. Initialise the hash with the first element in the array for simplicity
+     since the first element in this hash equals to the first element of the
+     inputs.
+  3. Then go through the input elements from the second element.
+  4. For each iteration, find the maximum values from the last 6 indices. Add
+      the current value to that to get the current max sum.
+  6. When we reach the end of the inputs, exit the loop.
+  7. Return the max sum of the last element calculated. For this, we need
+     clipping with module due to the space optimisation
 
   The runtime complexity of this dynamic programming solution is O(N) since we
   go through element in the inputs. If we consider the dice range K, then this
@@ -26,24 +28,9 @@ using namespace std;
 
 int solution(vector<int> &A)
 {
-  const int N = A.size();
-  constexpr int K = 6;
-  vector<int> max_sums(K, A[0]);
-  for (int i = 1; i < N; ++i) {
-    int sum_index = i % K;
-    // cout << "SUM INDEX: " << sum_index << endl;
-    int max_sum = max_sums[(sum_index + K - 1) % K] + A[i];
-    for (int die_index = 2; die_index <= min(i, K); ++die_index) {
-      const int curr_sum = max_sums[(sum_index + K - die_index) % K] + A[i];
-      // cout << "PREV INDEX: " << prev_index << endl;
-      // cout << "MAX_SUMS[PREV_INDEX]: " << max_sums[prev_index] << endl;
-      // cout << "MAX_SUMS[INDEX]: " << max_sums[sum_index] << endl;
-      if (curr_sum > max_sum) max_sum = curr_sum;
-    }
-    max_sums[sum_index] = max_sum;
-    // cout << "MAX_SUMS[INDEX]: " << max_sums[sum_index] << endl;
-  }
-  return max_sums[(N - 1) % K];
+  vector<int> max_sums(6, A[0]);
+  for (size_t i = 1; i < A.size(); ++i) max_sums[i % max_sums.size()] = *max_element(max_sums.cbegin(), max_sums.cend()) + A[i];
+  return max_sums[(A.size() - 1) % max_sums.size()];
 }
 
 int main()
