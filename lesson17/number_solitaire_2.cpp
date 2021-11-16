@@ -13,17 +13,17 @@ using namespace std;
   3. Then go through the input elements from the second element.
   4. For each iteration, find the maximum values from the last 6 indices. Add
       the current value to that to get the current max sum.
-  6. When we reach the end of the inputs, exit the loop.
-  7. Return the max sum of the last element calculated. For this, we need
+  5. When we reach the end of the inputs, exit the loop.
+  6. Return the max sum of the last element calculated. For this, we need
      clipping with module due to the space optimisation
 
   The runtime complexity of this dynamic programming solution is O(N) since we
   go through element in the inputs. If we consider the dice range K, then this
   would be O(N * K).
 
-  The space complexity is O(K) because we have a hash for each element in the
-  inputs. This could even be considered constant O(1) if we consider the number
-  of dice faces constant.
+  The space complexity is O(1) because we have a hash for the last six
+  elements. It is O(K) if we does not consider the number of dice faces
+  constant, but K.
  */
 
 int solution(vector<int> &A)
