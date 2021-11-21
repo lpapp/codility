@@ -10,7 +10,9 @@ using namespace std;
   3. Count the number of occurrence of each number in the inputs. Store the
      results in a vector hash.
   4. Go through each input.
-  5. For each input, goes through all possible sums of any number of inputs.
+  5. For each input, goes through all possible sums of any number of inputs. It
+     is a slight constant optimisation to go only up to half of the possible
+     sums.
   6. For each sum that has been made before, set the occurrence count of the
      current input.
   7. Check for each potential sum equal to or greater than the current input
@@ -45,7 +47,7 @@ int solution(vector<int> &A)
   sums[0] = 0;
   for (int ci = 1; ci < counts.size(); ++ci) {
     if (!counts[ci]) continue;
-    for (int si = 0; si < S; ++si) {
+    for (int si = 0; si < S / 2 + 1; ++si) {
       if (sums[si] >= 0) sums[si] = counts[ci];
       else if (si >= ci and sums[si - ci] > 0) sums[si] = sums[si - ci] - 1;
     }

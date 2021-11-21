@@ -9,9 +9,10 @@ int solution(string &S)
   stack<char> st;
 
   for (const auto c : S) {
-    if (c == '}' && st.top() == '{') st.pop();
-    else if (c == ']' && st.top() == '[') st.pop();
-    else if (c == ')' && st.top() == '(') st.pop();
+    if (st.empty()) st.push(c);
+    else if (c == '}' and st.top() == '{') st.pop();
+    else if (c == ']' and st.top() == '[') st.pop();
+    else if (c == ')' and st.top() == '(') st.pop();
     else st.push(c);
   }
 
@@ -34,6 +35,9 @@ int main()
 
   string i5 = "{({})}[]()";
   cout << "{()}() => 1: " << solution(i5) << endl;
+
+  string i6 = "}{";
+  cout << "}{ => 0: " << solution(i6) << endl;
 
   return 0;
 }
