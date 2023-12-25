@@ -14,7 +14,6 @@ vector<int> solution(vector<int> &A, int K)
   // array is equal to shifting - size of array, etc.
   uint8_t shift = K % sizeA;
 
-
   vector<int> result;
   result.reserve(sizeA);
   // Cycle what needs cycling from the right side to the left.
