@@ -4,6 +4,21 @@
 
 using namespace std;
 
+// Examples:
+// N=1 => 1: 1
+// N=2 => 2: 11, 2
+// N=3 => 3: 111, 12, 21
+// N=4 => 5: 1111, 22, 121, 112, 211
+// N=5 => 8: 11111, 221, 122, 212, 1112, 1121, 1211, 2111
+
+// The fibonacci logic can be proved by induction. Induct not just on one step,
+// but on the past two steps, in the same way that fibonacci numbers are
+// defined. The base cases are n=1 and n=2.
+// Two options: either go up one or two.
+// N can be obtained by append 2 at the end (or prepend at the front) for each
+// N-2 possibilities, and 1 for each N-1 possibilities. The concatenation of
+// the two lists then corresponds to the plus sign in the fibonacci sequence.
+
 // 1. Compute the first L fibonacci numbers. Each calculation needs modulo 2^30
 //    because the 50000th fibonacci number cannot be stored even in long
 //    double, it is so big. Since INT_MAX is 2^31, the summary of previously

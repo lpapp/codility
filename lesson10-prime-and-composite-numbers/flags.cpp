@@ -45,6 +45,11 @@ int solution(vector<int> &A)
 
 int main()
 {
+  // sizeA = 12
+  // 1 5 3 4 3 4  1  2  3  4  6  2
+  // 0 1 0 1 0 1  0  0  0  0  1  0
+  // 1 1 3 3 5 5 10 10 10 10 10  0
+
   vector<int> i1{1, 5, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2};
   cout << "1, 5, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2 => 3: " << solution(i1) << endl;
   return 0;

@@ -36,22 +36,17 @@ int solution(vector<int> &A)
     if (sizeA % group_size != 0) continue;
     int number_of_groups = sizeA / group_size;
     int group_index = 0;
-    // cout << "GROUP SIZE: " << group_size << endl;
     for (int peak_index = 0; peak_index < sizeA; peak_index = group_index * group_size) {
       peak_index = hash_next[peak_index];
-      // cout << "PEAK: " << peak_index << endl;
       if (!peak_index) break;
       int lower_range = group_index * group_size;
       int upper_range = lower_range + group_size - 1;
-      // cout << "UPPER RANGE: " << upper_range << endl;
       if (peak_index > upper_range) {
         break;
       }
       ++group_index;
     }
 
-    // cout << "NUMBER OF GROUPS: " << number_of_groups << endl;
-    // cout << "GROUP INDEX: " << group_index << endl;
     if (number_of_groups == group_index) {
       max_number_of_groups = max(max_number_of_groups, number_of_groups);
     }
@@ -62,6 +57,11 @@ int solution(vector<int> &A)
 
 int main()
 {
+  // sizeA = 12
+  // 0 1 2 3 4 5  6  7  8  9 10 11
+  // 1 2 3 4 3 4  1  2  3  4  6  2
+  // 0 0 0 1 0 1  0  0  0  0  1  0
+  // 3 3 3 3 5 5 10 10 10 10 10  0
   vector<int> i1{1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2};
   cout << "1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2 => 3: " << solution(i1) << endl;
 

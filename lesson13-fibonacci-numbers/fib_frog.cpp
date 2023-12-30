@@ -45,6 +45,13 @@ int solution(vector<int> &A)
 
 int main()
 {
+  // jump_size (M): 12
+  // 1  2  3  4  5  6  7  8  9  10 11 12
+  // 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0
+  // M, M, M, M, 1, M, M, M, M, M, M  M
+  // M, M, M, M, 1, M, M, M, M, M, M  M (i=3)
+  // M, M, M, M, 1, M, 2, M, M, M, M  M (i=4)
+  // M, M, M, M, M, M, 1, M, M, M, M  3 (i=6)
   vector<int> i1{0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0};
   cout << "0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0 => 3: " << solution(i1) << endl;
 

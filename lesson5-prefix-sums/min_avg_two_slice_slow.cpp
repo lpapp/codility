@@ -36,5 +36,8 @@ int main()
   vector<int> input2{-3, -5, -8, -4, -10};
   cout << "-3, -5, -8, -4, -10 => 2: " << solution(input2) << endl;
 
+  vector<int> input3{4, 2, 2, 5, 1, 1};
+  cout << "4, 2, 2, 5, 1, 1 => 4: " << solution(input3) << endl;
+
   return 0;
 }

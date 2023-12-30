@@ -8,10 +8,15 @@ using namespace std;
 // the range of 0...n-1, how many opening and closing there are. The negative
 // values and greater than n-1 do not contribute to the end result. Therefore,
 // we can truncate the long range to 0...n-1
+// We can essentially check all intersections within this range, so find the
+// earlier point within this range when the circle is opened.
+// Same with closing, find index + radius, or n-1 if index + radius is greater
+// than n-1. So, we get the closing point within this range.
 // Then, keep track of the currently opened circles at any index.
 // For each new opening in a position, increment the intersections with the
-// currently opened circles before, but also amongst each other opened at that
-// particular index.
+// currently opened circles before. But also, count the intersections amongst
+// each other opened at that particular index.
+// We also need to decrement the open counter when reaching circle endings.
 
 int solution(vector<int> &A)
 {

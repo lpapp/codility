@@ -4,7 +4,8 @@
 
 using namespace std;
 
-// 1. All fish flowing upstream survivors
+// 1. All fish flowing upstream survivors until we reach a fish flowing
+// downstream.
 // 2. Push all fish flowing downstream unto the stack
 // 3. Check fish flowing upstream how many fish flowing downstream it can eat
 //   a. if all, it is a survivor. Count all fish flowing upstream as survivors.

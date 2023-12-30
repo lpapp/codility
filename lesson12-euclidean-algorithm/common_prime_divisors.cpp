@@ -4,21 +4,21 @@
 using namespace std;
 
 // 1. Count the greatest common divisor.
-// 2. Divide each number with that repeatedly until you either get a:
+// 2. Divide each number with that repeatedly until you either get:
 //    a. one gcd
 //    a. one number
 // 3. Increase the count if you get number one rather than one gcd.
 
-int greatest_common_divisor(int a, int b, int multiplier)                       
-{                                                                               
-  if (a == b) return a * multiplier;                                            
+int greatest_common_divisor(int a, int b, int multiplier)
+{
+  if (a == b) return a * multiplier;
   else if (!(a & 1) and !(b & 1)) return greatest_common_divisor(a / 2, b / 2, 2 * multiplier);
-  else if (!(a & 1)) return greatest_common_divisor(a / 2, b, multiplier);      
-  else if (!(b & 1)) return greatest_common_divisor(a, b / 2, multiplier);      
-  else if (a > b) return greatest_common_divisor(a - b, b, multiplier);         
-  else return greatest_common_divisor(a, b - a, multiplier);                    
-  return 1;                                                                     
-} 
+  else if (!(a & 1)) return greatest_common_divisor(a / 2, b, multiplier);
+  else if (!(b & 1)) return greatest_common_divisor(a, b / 2, multiplier);
+  else if (a > b) return greatest_common_divisor(a - b, b, multiplier);
+  else return greatest_common_divisor(a, b - a, multiplier);
+  return 1;
+}
 
 int solution(vector<int> &A, vector<int> &B)
 {
