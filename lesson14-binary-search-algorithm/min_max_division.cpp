@@ -15,7 +15,7 @@ using namespace std;
 // 4. For each trial, check whether we can squeeze the elements into fewer
 //    blocks than the block number requested. If it is fewer, it is okay because
 //    we can use empty blocks. If it is equal, that is also acceptable.
-//    However, it is greater, then we can conclude that the tried minimum
+//    However, if it is greater, then we can conclude that the tried minimum
 //    largest sum needs to be higher to allow individual blocks to be larger to
 //    reduce the block count.
 // 5. One general principle can be observed above that the more fairly we
@@ -33,6 +33,9 @@ using namespace std;
 // search. The inner iteration will go through all the elements, so that is N
 // times. Therefore, it is O(N*log(N*M)) which is equivalent to O(N*log(N+M).
 
+// Note: this method returns the real count - 1 for the blocks, but this is
+// compensates in the binary search by only using < instead of <=.
+
 int check(vector<int>& A, int largest_sum)
 {
   int sum = 0;
@@ -45,6 +48,9 @@ int check(vector<int>& A, int largest_sum)
 
   return count;
 }
+
+// Note: we also did not need a temporary result variable here, setting that to
+// mid in the if line as we can just reuse the start variable.
 
 int solution(int K, int /*M*/, vector<int> &A)
 {
@@ -60,6 +66,33 @@ int solution(int K, int /*M*/, vector<int> &A)
 
 int main()
 {
+  // start (max):  5
+  // end (sum)  : 15
+  // mid        : 10
+  // count      :  1
+  // {2, 1, 5, 1}, {2, 2, 2} < K=3
+  
+  // start (max):  5
+  // end (sum)  :  9
+  // mid        :  7
+  // count      :  2
+  // {2,  1}, {5, 1}, {2, 2, 2} == K=3
+
+  // start (max):  5
+  // end (sum)  :  6
+  // mid        :  5
+  // count      :  3
+  // {2, 1}, {5}, {1, 2, 2}, {2} == K=3
+
+  // start (max):  6
+  // end (sum)  :  6
+  // mid        :  6
+  // count      :  2
+  // {2, 1}, {5, 1}, {2, 2, 2} < K=3
+
+  // start (max):  6
+  // end (sum)  :  5
+  // result     :  6 
   vector<int> i1{2, 1, 5, 1, 2, 2, 2};
   cout << "2, 1, 5, 1, 2, 2, 2 | 3 | 5 => 6: " << solution(3, 5, i1) << endl;
 

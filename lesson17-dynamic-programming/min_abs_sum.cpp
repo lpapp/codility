@@ -5,21 +5,26 @@
 using namespace std;
 
 /*
+  Base idea from: https://codility.com/media/train/solution-min-abs-sum.pdf
+  with some constant optimisation.
+
   1. Calculate the maximum absolute element of the inputs.
   2. Calculate the absolute sum of the inputs.
   3. Count the number of occurrence of each number in the inputs. Store the
      results in a vector hash.
-  4. Go through each input.
-  5. For each input, goes through all possible sums of any number of inputs. It
-     is a slight constant optimisation to go only up to half of the possible
-     sums.
-  6. For each sum that has been made before, set the occurrence count of the
-     current input.
+  4. Go through each possible input (ignoring signs via abs) if they had
+     occurred. Skip those that do not occur.
+  5. For each occurring input, goes through all possible sums possible with
+     this occuring input. It is a slight constant optimisation to go only up to
+     half of the possible sums.
+  6. For each sum that has been made before checking the current input, set the
+     occurrence count of the current input.
   7. Check for each potential sum equal to or greater than the current input
-     whether this input has already been used before. Update the values at the
-     current sum accordingly. We do not need to check for potential sums less
-     than the current input in this iteration, since it is evident that it has
-     not been used before.
+     whether this input has already been used before. And only if the current
+     sum had not been made yet. Update the values at the current sum
+     accordingly. We do not need to check for potential sums less than the
+     current input in this iteration, since it is evident that it has not been
+     used before.
   8. The above nested loop will fill in each possible sum with a value greater
      than -1.
   9. Go through this possible sum hash again to look for the closest sum to
@@ -33,7 +38,7 @@ using namespace std;
   Therefore, it is O(M * N * M).
 
   The space complexity of this solution is O(N * M) because we allocate a hash
-  of N items for the counts and a hash of S items for the sums. S is N * M
+  of M items for the counts and a hash of S items for the sums. S is N * M
   again.
  */
 
@@ -60,6 +65,13 @@ int solution(vector<int> &A)
 
 int main()
 {
+  // M: 5, S: 10
+  // counts: 0: 0, 1: 1, 2: 2, 3: 0, 4: 0, 5: 1
+  // sums: 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+  // sums: 1,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1 (1: 1)
+  // sums: 2,  2,  1,  1, 0, 0, -1, -1, -1, -1, -1 (2: 2)
+  // sums: 1,  1,  1,  1, 1, 1, -1, -1, -1, -1, 0 (5: 1)
+  // 10 - 2 * 5 = 0
   vector<int> A1{1, 5, 2, -2};
   cout << "1, 5, 2, -2 => 0: " << solution(A1) << endl;
 
